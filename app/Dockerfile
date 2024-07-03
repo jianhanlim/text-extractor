@@ -8,13 +8,23 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the required libraries
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && \
+    apt-get install -y gcc && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code into the container
+# Copy the application code into the container
 COPY . .
 
+# Compile the Cython file
+RUN python setup.py build_ext --inplace
+
+# Remove the original Python files
+RUN rm -f main.pyx setup.py main.py Dockerfile requirements.txt
+RUN find . -type f -name '*.c' -delete && \
+    find . -type d -name '__pycache__' -exec rm -r {} +
+RUN rm -rf build
 # Expose the port the app runs on
 EXPOSE 5000
 
 # Command to run the application
-CMD ["python", "main.py"]
+CMD ["python", "-c", "import main; main.app.run(host='0.0.0.0', port=5000)"]

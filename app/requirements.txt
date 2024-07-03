@@ -2,3 +2,5 @@ Flask==2.0.2
 PyMuPDF==1.19.6
 python-docx==0.8.11
 Werkzeug==2.0.2
+Cython==0.29.23
+setuptools==58.0.4
