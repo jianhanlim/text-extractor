@@ -1,8 +1,5 @@
-Here's the updated `README.md` file with instructions on how to build and run the Docker container, including running it with the name `text-extractor` and ensuring it restarts always.
-
 ### `README.md`
 
-```markdown
 # Text Extractor API
 
 This application extracts text from PDF, DOCX, and TXT files and splits the text into chunks of a specified size.
